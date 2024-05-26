@@ -1,0 +1,40 @@
+#rulePanel {
+    display: flex;
+    flex-direction: column;
+    align-self: center;
+    width: 400px;
+    background-color: var(--background-color-secondary);
+    border: 1px solid var(--border-color);
+    border-radius: 1em;
+    overflow: hidden;
+    margin-block: 16px;
+}
+
+#rulePanel label {
+    width: 100%;
+    padding: 6px;
+    background-color: #0007;
+    border-bottom: 1px solid var(--border-color);
+}
+
+#rulePanel.passed label::before {
+    content: '✔ ';
+    color: #0f0;
+}
+
+#rulePanel.failed label::before {
+    content: '✖ ';
+    color: #f40;
+}
+
+#rulePanel > div {
+    display: flex;
+    flex-direction: column;
+    font-size: 20px;
+    padding: 10px;
+    gap: 12px;
+}
+
+#rulePanel.passed {
+    filter: sepia(10px);
+}

@@ -1,0 +1,67 @@
+#root {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  text-align: center;
+}
+
+.editor {
+  display: flex;
+  flex-direction: column;
+  width: min-content;
+  height: min-content;
+  padding-inline: auto;
+}
+
+.editor .tiptap {
+  width: 400px;
+  min-height: 200px;
+  background-color: var(--background-color-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 1em;
+  text-align: left;
+  padding: 1em;
+  display: flex;
+  justify-content: start;
+  flex-flow: column;
+  cursor: text;
+  box-sizing: border-box;
+  margin: 0;
+}
+
+.editor .tiptap > * {
+  margin-top: -.5em;
+}
+
+.ProseMirror:focus {
+  outline: none;
+}
+
+.editor .toolbar {
+  margin-top: -1em;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  background-color: var(--background-color-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 0 0 1em 1em;
+  gap: .25em;
+  padding: .5em;
+  padding-top: 1.5em;
+}
+
+.editor .toolbar * {
+  padding: .5em 1em;
+  font-size: 16px;
+  border-radius: .5em;
+  border: 1px solid var(--border-color);
+  background-color: var(--background-color-secondary);
+  outline: none;
+  color: var(--text-color);
+  cursor: pointer;
+}
+
+.editor .toolbar .active {
+  background-color: white;
+  color: black;
+}
