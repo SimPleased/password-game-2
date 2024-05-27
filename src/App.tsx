@@ -53,7 +53,16 @@ const App = () => {
               allowTextColor={textColor}
               allowHiglightColor={higlightColor}
             />
-            <Rules />
+            <Rules
+              setBold={setBold}
+              setItalic={setItalic}
+              setStrikeThrough={setStrikeThrough}
+              setUnderline={setUnderline}
+              setFontFamily={setFontFamily}
+              setFontSize={setFontSize}
+              setTextColor={setTextColor}
+              setHiglightColor={setHiglightColor}
+            />
             </>
           }
           extensions={extensions}

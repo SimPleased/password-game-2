@@ -19,7 +19,7 @@ const Captcha: React.FC<CaptchaProps> = ({ onChange, className }) => {
         return Array.from({ length: 6 }, () => characters[Math.floor(Math.random() * characters.length)]).join('');
     }, []);
 
-    const [text, setText] = useState(generateCaptchaText);
+    const [text, setText] = useState(generateCaptchaText());
 
     useEffect(() => {
         onChange?.(text);
@@ -41,7 +41,7 @@ const Captcha: React.FC<CaptchaProps> = ({ onChange, className }) => {
                 context.arc(
                     canvas.width * Math.random(),
                     canvas.height * Math.random(),
-                    Math.random() * canvas.height * 0.5,
+                    Math.random() * canvas.height * 0.3 + canvas.height * 0.2,
                     0,
                     2 * Math.PI
                 )
@@ -49,7 +49,7 @@ const Captcha: React.FC<CaptchaProps> = ({ onChange, className }) => {
                 context.fill();
             }
 
-            context.lineWidth = 1;
+            context.lineWidth = 2;
             for (let i = 0; i < Math.random() * 5 + 3; i++) {
                 context.beginPath();
 
@@ -66,8 +66,8 @@ const Captcha: React.FC<CaptchaProps> = ({ onChange, className }) => {
         
                     for (let t = 0; t <= 1; t += 1 / (Math.random() * 10 + 1)) {
                         context.lineTo(
-                            Lerp(startPos.x, endPos.x, t) + Math.random() * canvas.width * 0.2,
-                            Lerp(startPos.y, endPos.y, t) + Math.random() * canvas.height * 0.2
+                            Lerp(startPos.x, endPos.x, t) + (Math.random() - 0.5) * canvas.width * 0.2,
+                            Lerp(startPos.y, endPos.y, t) + (Math.random() - 0.5) * canvas.height * 0.2
                         );
                     }
                 }

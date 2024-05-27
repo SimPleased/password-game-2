@@ -6,7 +6,7 @@
 }
 
 #captcha canvas {
-    background-color: var(--background-color);
+    background-color: var(--background-color-secondary);
     border: 1px solid var(--border-color);
     border-radius: 1em;
     stroke: var(--text-color);
