@@ -45,12 +45,12 @@ const Captcha: React.FC<CaptchaProps> = ({ onChange, className }) => {
                     0,
                     2 * Math.PI
                 )
-                context.fillStyle = `#${Math.round(Math.random() * 16**3).toString(16).padStart(3, '0')}3`;
+                context.fillStyle = `#${Math.round(Math.random() * 16**3).toString(16).padStart(3, '0')}4`;
                 context.fill();
             }
 
             context.lineWidth = 1;
-            for (let i = 0; i < Math.random() * 3 + 2; i++) {
+            for (let i = 0; i < Math.random() * 5 + 3; i++) {
                 context.beginPath();
 
                 const positions: Vector2[] = Array.from({ length: Math.random() * 5 + 2 }, () => ({
@@ -77,7 +77,7 @@ const Captcha: React.FC<CaptchaProps> = ({ onChange, className }) => {
             }
 
             const charWidth = canvas.width / text.length;
-            context.lineWidth = 0.08;
+            context.lineWidth = 0.2;
 
             [...text].forEach((char, i) => {
                 context.strokeStyle = window.getComputedStyle(canvas).stroke;

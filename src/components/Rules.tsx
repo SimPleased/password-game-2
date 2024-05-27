@@ -17,8 +17,6 @@ const Rules: React.FC = () => {
 
     const [captchaText, setCaptchaText] = useState('');
 
-    const captcha = <Captcha key="captcha" onChange={setCaptchaText} className="captcha"/>;
-
     const passwordText = () => editor?.getText() ?? '';
 
     const romanNumerals: {[key: string]: number} = {
@@ -75,38 +73,25 @@ const Rules: React.FC = () => {
             number: 9,
             description: [
                 "Your password must include this CAPTCHA:",
-                captcha
+                <Captcha key="captcha" onChange={setCaptchaText} className="captcha"/>
             ],
-            check: () => {console.log(captchaText); return passwordText().includes(captchaText);}
+            check: () => passwordText().includes(captchaText)
         }
     ]
 
-    const [failedRules, setFailedRules] = useState<RuleItem[]>([]);
-    const [passedRules, setPassedRules] = useState<RuleItem[]>([]);
     const [ruleReached, setRuleReached] = useState(1);
 
     useEffect(() => {
         const handleUpdate = () => {
-            const newPassedRules: RuleItem[] = [];
-            const newFailedRules: RuleItem[] = [];
-            let foundFailed = false;
-
+            let maxReached = 1;
             for (const rule of rules) {
-                if (rule.number > ruleReached) {
-                    if (foundFailed) break;
-                    setRuleReached(oldRuleReached => Math.max(oldRuleReached, rule.number));
-                }
-
                 if (rule.check()) {
-                    newPassedRules.push(rule);
+                    maxReached = rule.number + 1;
                 } else {
-                    newFailedRules.push(rule);
-                    foundFailed = true;
+                    break;
                 }
             }
-
-            setPassedRules(newPassedRules);
-            setFailedRules(newFailedRules);
+            setRuleReached(oldRuleReached => Math.max(oldRuleReached, maxReached));
         };
 
         editor?.on('update', handleUpdate);
@@ -114,31 +99,25 @@ const Rules: React.FC = () => {
         return () => {
             editor?.off('update', handleUpdate);
         };
-    }, [editor, ruleReached, rules]);
+    }, [editor, ruleReached]);
 
     return (
         <ul id="rules">
-            {passedRules.map(rule => rule.number <= ruleReached && (
-                <li key={rule.number}>
-                    <RulePanel
-                        number={rule.number}
-                        className="passed"
-                    >
-                        {rule.description}
-                    </RulePanel>
-                </li>
-            ))}
-
-            {failedRules.map(rule => rule.number <= ruleReached && (
-                <li key={rule.number}>
-                    <RulePanel
-                        number={rule.number}
-                        className="failed"
-                    >
-                        {rule.description}
-                    </RulePanel>
-                </li>
-            ))}
+            {rules
+                .filter(rule => ruleReached > rule.number)
+                .sort((previousRule, currentRule) =>
+                    Number(currentRule.check()) - Number(previousRule.check()
+                ))
+                .map(rule => (
+                    <li key={rule.number}>
+                        <RulePanel
+                            number={rule.number}
+                            className={rule.check() ? 'passed' : 'failed'}
+                        >
+                            {rule.description}
+                        </RulePanel>
+                    </li>
+                ))}
         </ul>
     )
 }
